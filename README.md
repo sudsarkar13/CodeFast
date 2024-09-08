@@ -7,7 +7,6 @@ CodeFast Copilot - Local Commit Buddy is a VS Code extension that generates comm
 - 🤖 Generate commit messages and descriptions using local AI models
 - 🎛️ Select your preferred AI model and customize the generated text
 - 😊 Incorporate relevant emojis into commit messages and descriptions
-- 🌡️ Control the creativity of the AI model with temperature setting
 - 🔌 Native-like experience within VS Code
 - 🏠 Offline functionality - no cloud services or API keys required
 - 🆕 Compatible with the latest VS Code versions
@@ -41,10 +40,13 @@ You can customize the extension's behavior in the VS Code settings:
 - `codefast.useEmojis`: Enable or disable emoji incorporation (default: true)
 - `codefast.customPrompt`: Set a custom prompt for the AI model
 - `codefast.emojiMapping`: Customize the emoji mapping for commit message prefixes
-- `codefast.temperature`: Control the randomness of the AI model's output (default: 0.7, range: 0-1)
 
 To access these settings, search for "CodeFast" in the VS Code settings.
 
-### Customizing Emoji Mapping
+## Contributing
 
-You can customize the emoji mapping for different commit message prefixes. The default mapping is:
+We welcome contributions to CodeFast Copilot! Please see our [Contributing Guide](CONTRIBUTING.md) for more details.
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.

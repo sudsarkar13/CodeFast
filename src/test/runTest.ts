@@ -5,11 +5,11 @@ async function main(): Promise<void> {
     try {
         // The folder containing the Extension Manifest package.json
         // Passed to `--extensionDevelopmentPath`
-        const extensionDevelopmentPath = path.resolve(__dirname, '../../');
+        const extensionDevelopmentPath = path.resolve(__dirname as string, '../../');
 
-        // The path to the extension test script
+        // The path to the extension test runner script
         // Passed to --extensionTestsPath
-        const extensionTestsPath = path.resolve(__dirname, './suite/index');
+        const extensionTestsPath = path.resolve(__dirname as string, './suite/index');
 
         // Download VS Code, unzip it and run the integration test
         await runTests({ extensionDevelopmentPath, extensionTestsPath });
@@ -19,7 +19,7 @@ async function main(): Promise<void> {
     }
 }
 
-main().catch(err => {
+main().catch((err: unknown) => {
     console.error(err);
     process.exit(1);
 });

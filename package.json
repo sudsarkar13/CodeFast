@@ -94,5 +94,9 @@
 		"vscode": "^1.1.37",
 		"vscode-test": "^1.6.1"
 	},
-	"packageManager": "yarn@4.4.1"
+	"packageManager": "yarn@4.4.1",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/sudsarkar13/codefast-copilot-local-commit-buddy.git"
+	}
 }

@@ -36,3 +36,12 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# updated ignore list
+out
+node_modules
+.vscode-test/
+# .vsix
+.DS_Store
+coverage
+.nyc_output

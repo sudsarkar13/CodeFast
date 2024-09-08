@@ -34,17 +34,17 @@
 					"default": "codellama",
 					"description": "Select the AI model to use"
 				},
-				"codefast.commitBuddy.useEmojis": {
+				"codefast.useEmojis": {
 					"type": "boolean",
 					"default": true,
 					"description": "Enable or disable emoji incorporation"
 				},
-				"codefast.commitBuddy.customPrompt": {
+				"codefast.customPrompt": {
 					"type": "string",
 					"default": "",
 					"description": "Set a custom prompt for the AI model"
 				},
-				"codefast.commitBuddy.emojiMapping": {
+				"codefast.emojiMapping": {
 					"type": "object",
 					"default": {
 						"feat": "✨",
@@ -65,22 +65,25 @@
 		"compile": "tsc -p ./",
 		"watch": "tsc -watch -p ./",
 		"pretest": "npm run compile && npm run lint",
-		"lint": "eslint src --ext ts",
-		"test": "node ./out/test/runTest.js"
+		"lint": "eslint src",
+		"test": "node ./out/test/runTest.js",
+		"build": "npm run compile"
 	},
 	"devDependencies": {
+		"@eslint/js": "^9.10.0",
 		"@types/node": "^14.x.x",
-		"@types/vscode": "^1.60.0",
-		"@typescript-eslint/eslint-plugin": "^5.30.0",
-		"@typescript-eslint/parser": "^5.30.0",
-		"eslint": "^8.18.0",
-		"typescript": "^4.7.4",
-		"vscode-test": "^1.6.1"
-	},
-	"packageManager": "yarn@4.4.1",
-	"dependencies": {
+		"@typescript-eslint/eslint-plugin": "^5.62.0",
+		"@typescript-eslint/parser": "^5.62.0",
 		"child_process": "^1.0.2",
+		"eslint": "^8.57.0",
+		"eslint-plugin-react": "^7.35.2",
+		"globals": "^15.9.0",
 		"http": "^0.0.1-security",
-		"vscode": "^1.1.37"
-	}
+		"typescript": "^4.9.5",
+		"typescript-eslint": "^8.4.0",
+		"vscode": "^1.1.37",
+		"vscode-test": "^1.6.1",
+		"@vscode/test-electron": "^2.3.8"
+	},
+	"packageManager": "yarn@4.4.1"
 }

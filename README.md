@@ -38,10 +38,10 @@ CodeFast Copilot - Local Commit Buddy is a VS Code extension that generates comm
 You can customize the extension's behavior in the VS Code settings:
 
 - `codefast.aiModel`: Select the AI model to use (default: "codellama")
-- `codefast.commitBuddy.useEmojis`: Enable or disable emoji incorporation (default: true)
-- `codefast.commitBuddy.customPrompt`: Set a custom prompt for the AI model
-- `codefast.commitBuddy.emojiMapping`: Customize the emoji mapping for commit message prefixes
-- `codefast.commitBuddy.temperature`: Control the randomness of the AI model's output (default: 0.7, range: 0-1)
+- `codefast.useEmojis`: Enable or disable emoji incorporation (default: true)
+- `codefast.customPrompt`: Set a custom prompt for the AI model
+- `codefast.emojiMapping`: Customize the emoji mapping for commit message prefixes
+- `codefast.temperature`: Control the randomness of the AI model's output (default: 0.7, range: 0-1)
 
 To access these settings, search for "CodeFast" in the VS Code settings.
 

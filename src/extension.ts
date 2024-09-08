@@ -1,3 +1,5 @@
+/* global console */
+
 import * as vscode from 'vscode';
 import { generateCommitMessage } from './commitGenerator';
 
@@ -13,6 +15,7 @@ export function activate(context: vscode.ExtensionContext) {
             title: "Generating commit message...",
             cancellable: false
         }, async (progress) => {
+            progress.report({ message: 'Starting task...' });
             try {
                 const commitMessage = await generateCommitMessage();
                 inputBox.value = commitMessage;

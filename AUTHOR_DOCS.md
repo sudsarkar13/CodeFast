@@ -1,12 +1,19 @@
 # CodeFast Copilot - Local Commit Buddy: Author Documentation
 
-This document provides information for maintaining and publishing the CodeFast Copilot - Local Commit Buddy VS Code extension.
+This document provides step-by-step instructions for developing, testing, and publishing the CodeFast Copilot - Local Commit Buddy VS Code extension.
+
+## Prerequisites
+
+1. Install [Node.js](https://nodejs.org/) (version 14.x or later)
+2. Install [Visual Studio Code](https://code.visualstudio.com/)
+3. Install [Git](https://git-scm.com/)
 
 ## Development Setup
 
 1. Clone the repository:
    ```
    git clone https://github.com/yourusername/codefast-copilot-local-commit-buddy.git
+   cd codefast-copilot-local-commit-buddy
    ```
 2. Install dependencies:
    ```

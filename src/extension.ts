@@ -1,39 +1,40 @@
-/* global console */
-
 import * as vscode from 'vscode';
-import { generateCommitMessage } from './commitGenerator';
+import { generateCommitMessage as gcm } from './commitGenerator';
 
-export function activate(context: vscode.ExtensionContext) {
-    console.log('CodeFast Copilot - Local Commit Buddy is now active!');
+// This method is called when your extension is activated
+// Your extension is activated the very first time the command is executed
+export function activate(context: vscode.ExtensionContext): void {
+	console.log('Congratulations, your extension "codefast" is now active!');
 
-    let disposable = vscode.commands.registerCommand('codefast.generateCommitMessage', async () => {
-        const scm = vscode.scm.createSourceControl('git', 'Git');
-        const inputBox = scm.inputBox;
+	// The command has been defined in the package.json file
+	// Now provide the implementation of the command with registerCommand
+	// The commandId parameter must match the command field in package.json
+	const disposable = vscode.commands.registerCommand('codefast.generateCommitMessage', async () => {
+		const commitTypes = ['feat', 'fix', 'docs', 'style', 'refactor', 'test', 'chore'];
+		const selectedType = await vscode.window.showQuickPick(commitTypes, {
+			placeHolder: 'Select the type of commit'
+		});
 
-        vscode.window.withProgress({
-            location: vscode.ProgressLocation.Notification,
-            title: "Generating commit message...",
-            cancellable: false
-        }, async (progress) => {
-            progress.report({ message: 'Starting task...' });
-            try {
-                const commitMessage = await generateCommitMessage();
-                inputBox.value = commitMessage;
-                vscode.window.showInformationMessage('Commit message generated successfully!');
-            } catch (error) {
-                if (error instanceof Error) {
-                    vscode.window.showErrorMessage(error.message);
-                } else {
-                    vscode.window.showErrorMessage('An unknown error occurred while generating the commit message.');
-                }
-            }
-        });
-    });
+		if (!selectedType) {
+			return; // User cancelled the selection
+		}
 
-    context.subscriptions.push(disposable);
+		try {
+			const message = await gcm(selectedType);
+			await vscode.env.clipboard.writeText(message);
+			vscode.window.showInformationMessage(`Commit message copied to clipboard: ${message}`);
+		} catch (error) {
+			vscode.window.showErrorMessage(`Failed to generate commit message: ${error}`);
+		}
+	});
+
+	context.subscriptions.push(disposable);
 }
 
-// This function is called when the extension is deactivated
-export function deactivate(): void {
-    // Intentionally left empty
+export function deactivate() {
+	// Perform any cleanup tasks here
+	console.log('CodeFast extension is deactivating');
 }
+
+// Export the generateCommitMessage function for testing
+export const generateCommitMessage = gcm;

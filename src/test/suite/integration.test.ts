@@ -3,12 +3,15 @@ import * as vscode from 'vscode';
 import * as path from 'path';
 import * as fs from 'fs';
 import * as os from 'os';
+import * as sinon from 'sinon';
 
-suite('Integration Test Suite', () => {
+suite('Integration Test Suite', function() {
+    this.timeout(10000); // Increase timeout for all tests in this suite
+
     vscode.window.showInformationMessage('Start all integration tests.');
 
     test('Extension activation', async () => {
-        console.log('Available extensions:', vscode.extensions.all.map(e => e.id));
+        console.log('Available extensions:', vscode.extensions.all.map((e) => e.id));
         const extension = vscode.extensions.getExtension('codefastdev.codefast');
         assert.ok(extension, 'Extension should be present');
         
@@ -29,12 +32,19 @@ suite('Integration Test Suite', () => {
             const document = await vscode.workspace.openTextDocument(testFilePath);
             await vscode.window.showTextDocument(document);
 
+            // Stub the showQuickPick and scm.inputBox
+            const quickPickStub = sinon.stub(vscode.window, 'showQuickPick').resolves({ label: 'feat' });
+            const scmInputBox = { value: '' };
+            sinon.stub(vscode.scm, 'inputBox').get(() => scmInputBox);
+
             // Execute the command
             await vscode.commands.executeCommand('codefast.generateCommitMessage');
 
             // Add assertions to check the result of the command
-            // For example, you might want to check if the SCM input box has been updated
+            assert.strictEqual(quickPickStub.called, true);
+            assert.strictEqual(scmInputBox.value, 'feat: Simulated commit message');
 
+            quickPickStub.restore();
         } finally {
             // Clean up
             fs.unlinkSync(testFilePath);

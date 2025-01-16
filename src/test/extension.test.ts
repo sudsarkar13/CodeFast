@@ -5,9 +5,11 @@ import * as commitGenerator from '../commitGenerator';
 
 suite('Extension Test Suite', () => {
     let sandbox: sinon.SinonSandbox;
+    let quickPickStub: sinon.SinonStub;
 
     setup(() => {
         sandbox = sinon.createSandbox();
+        quickPickStub = sandbox.stub(vscode.window, 'showQuickPick').resolves({ label: 'feat' });
     });
 
     teardown(() => {
@@ -15,14 +17,13 @@ suite('Extension Test Suite', () => {
     });
 
     test('Generate Commit Message Command', async () => {
-        const quickPickStub = sandbox.stub(vscode.window, 'showQuickPick').resolves({ label: 'feat' });
         const generateCommitMessageStub = sandbox.stub(commitGenerator, 'generateCommitMessage').resolves('Commit message');
 
         await vscode.commands.executeCommand('codefast.generateCommitMessage');
 
         assert.strictEqual(quickPickStub.calledOnce, true);
         assert.strictEqual(generateCommitMessageStub.calledOnce, true);
-        assert.strictEqual(generateCommitMessageStub.firstCall.args[0], 'feat', 'Commit type should be passed to generateCommitMessage');
+        assert.deepStrictEqual(generateCommitMessageStub.firstCall.args[0], 'feat', 'Commit type should be passed to generateCommitMessage');
     });
 
     test('maxTokens configuration is read correctly', async () => {
@@ -33,7 +34,6 @@ suite('Extension Test Suite', () => {
             update: () => Promise.resolve()
         });
 
-        const quickPickStub = sandbox.stub(vscode.window, 'showQuickPick').resolves({ label: 'feat' });
         const generateCommitMessageStub = sandbox.stub(commitGenerator, 'generateCommitMessage').resolves('Commit message');
 
         await vscode.commands.executeCommand('codefast.generateCommitMessage');
@@ -41,5 +41,6 @@ suite('Extension Test Suite', () => {
         assert.strictEqual(getConfigurationStub.calledOnce, true);
         assert.strictEqual(generateCommitMessageStub.calledOnce, true);
         assert.strictEqual(quickPickStub.calledOnce, true);
+        assert.strictEqual(getConfigurationStub().get('maxTokens'), 100, 'maxTokens should be read from configuration');
     });
 });

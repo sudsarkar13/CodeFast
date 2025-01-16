@@ -10,22 +10,18 @@ export function activate(context: vscode.ExtensionContext): void {
 	// Now provide the implementation of the command with registerCommand
 	// The commandId parameter must match the command field in package.json
 	const disposable = vscode.commands.registerCommand('codefast.generateCommitMessage', async () => {
-		const commitTypes = ['feat', 'fix', 'docs', 'style', 'refactor', 'test', 'chore'];
-		const selectedType = await vscode.window.showQuickPick(commitTypes, {
-			placeHolder: 'Select the type of commit'
+		const commitType = await vscode.window.showQuickPick(['feat', 'fix', 'docs', 'style', 'refactor', 'test', 'chore'], {
+			placeHolder: 'Select commit type'
 		});
 
-		if (!selectedType) {
-			return; // User cancelled the selection
+		if (!commitType) {
+			vscode.window.showErrorMessage('Commit type is required');
+			return;
 		}
 
-		try {
-			const message = await gcm(selectedType);
-			await vscode.env.clipboard.writeText(message);
-			vscode.window.showInformationMessage(`Commit message copied to clipboard: ${message}`);
-		} catch (error) {
-			vscode.window.showErrorMessage(`Failed to generate commit message: ${error}`);
-		}
+		const commitMessage = await gcm(commitType);
+		await vscode.env.clipboard.writeText(commitMessage);
+		vscode.window.showInformationMessage(`Commit message copied to clipboard: ${commitMessage}`);
 	});
 
 	context.subscriptions.push(disposable);
@@ -35,6 +31,3 @@ export function deactivate() {
 	// Perform any cleanup tasks here
 	console.log('CodeFast extension is deactivating');
 }
-
-// Export the generateCommitMessage function for testing
-export const generateCommitMessage = gcm;

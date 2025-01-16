@@ -1,7 +1,7 @@
 {
 	"name": "codefast",
-	"displayName": "CodeFast Copilot - Local Commit Buddy",
-	"description": "Generate commit messages using local AI models through Ollama",
+	"displayName": "CodeFast",
+	"description": "Use Ollama to generate commit messages and analyze code",
 	"version": "0.0.1",
 	"publisher": "sudsarkar13",
 	"license": "MIT",
@@ -29,38 +29,57 @@
 		"configuration": {
 			"title": "CodeFast",
 			"properties": {
-				"codefast.aiModel": {
+				"codefast.ollamaEndpoint": {
 					"type": "string",
-					"default": "codellama",
-					"description": "Select the AI model to use"
+					"default": "http://127.0.0.1:11434/api/generate",
+					"description": "Ollama API endpoint"
 				},
-				"codefast.useEmojis": {
-					"type": "boolean",
-					"default": true,
-					"description": "Enable or disable emoji incorporation"
-				},
-				"codefast.customPrompt": {
+				"codefast.ollamaModel": {
 					"type": "string",
-					"default": "",
-					"description": "Set a custom prompt for the AI model"
-				},
-				"codefast.emojiMapping": {
-					"type": "object",
-					"default": {
-						"feat": "✨",
-						"fix": "🐛",
-						"docs": "📚",
-						"style": "💎",
-						"refactor": "📦",
-						"test": "🚨",
-						"chore": "🔧"
-					},
-					"description": "Custom emoji mapping for commit message prefixes"
+					"default": "llama3.1:8b",
+					"description": "Ollama model to use"
 				},
 				"codefast.maxTokens": {
 					"type": "number",
 					"default": 150,
-					"description": "Maximum number of tokens for the AI response"
+					"description": "Maximum number of tokens to generate for commit messages"
+				},
+				"codefast.temperature": {
+					"type": "number",
+					"default": 0.7,
+					"minimum": 0,
+					"maximum": 1,
+					"description": "Temperature for text generation (0-1, higher values make output more random)"
+				},
+				"codefast.useEmoji": {
+					"type": "boolean",
+					"default": true,
+					"description": "Include emojis in generated commit messages"
+				},
+				"codefast.commitConvention": {
+					"type": "string",
+					"enum": [
+						"conventional",
+						"gitmoji",
+						"custom"
+					],
+					"default": "conventional",
+					"description": "Commit message convention to follow"
+				},
+				"codefast.customPrompt": {
+					"type": "string",
+					"default": "",
+					"description": "Custom prompt to use for commit message generation (leave empty to use default)"
+				},
+				"codefast.includeCodeSnippets": {
+					"type": "boolean",
+					"default": false,
+					"description": "Include relevant code snippets in the commit message prompt"
+				},
+				"codefast.maxRetries": {
+					"type": "number",
+					"default": 3,
+					"description": "Maximum number of retries for API calls"
 				}
 			}
 		}
@@ -80,7 +99,6 @@
 		"@types/mocha": "^8.0.4",
 		"@types/node": "^16.x.x",
 		"@types/sinon": "^10.0.13",
-		"@types/vscode": "^1.60.0",
 		"@typescript-eslint/eslint-plugin": "^5.0.0",
 		"@typescript-eslint/parser": "^5.0.0",
 		"@vscode/test-electron": "^2.3.8",
@@ -96,5 +114,6 @@
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/sudsarkar13/codefast-copilot-local-commit-buddy.git"
-	}
+	},
+	"packageManager": "yarn@4.4.1"
 }
